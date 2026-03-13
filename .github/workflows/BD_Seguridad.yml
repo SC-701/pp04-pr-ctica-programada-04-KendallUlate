@@ -37,7 +37,6 @@ jobs:
           <?xml version="1.0" encoding="utf-8"?>
           <configuration>
             <packageSources>
-              <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
               <add key="github" value="https://nuget.pkg.github.com/SC-701/index.json" />
             </packageSources>
             <packageSourceCredentials>
@@ -50,15 +49,6 @@ jobs:
           "@
           $content | Out-File -FilePath "Seguridad/Seguridad.API/NuGet.Config" -Encoding utf8
         shell: powershell
-
-
-      - name: Authenticate to GitHub Packages
-        run: |
-            nuget sources add \
-                -name "github" \
-                -source "https://nuget.pkg.github.com/SC-701/index.json" \
-                    -username ${{ github.actor }} \
-                    -password ${{ secrets.PAQUETESTOKEN }}
 
       - name: Restore NuGet packages
         run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln"
