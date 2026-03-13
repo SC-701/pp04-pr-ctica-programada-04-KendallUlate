@@ -51,8 +51,17 @@ jobs:
           $content | Out-File -FilePath "Seguridad/Seguridad.API/NuGet.Config" -Encoding utf8
         shell: powershell
 
+
+      - name: Authenticate to GitHub Packages
+        run: |
+            nuget sources add \
+                -name "github" \
+                -source "https://nuget.pkg.github.com/SC-701/index.json" \
+                    -username ${{ github.actor }} \
+                    -password ${{ secrets.PAQUETESTOKEN }}
+
       - name: Restore NuGet packages
-        run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln" -ConfigFile "Seguridad/Seguridad.API/NuGet.Config"
+        run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln"
 
       - name: Build Database Project
         run: |
